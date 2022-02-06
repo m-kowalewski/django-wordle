@@ -1,3 +1,7 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'WordleColourResult/style.css' %}">
+
 {% block title %}
 Wellcome home
 {% endblock %}
@@ -7,7 +11,10 @@ Wellcome home
 
 <ul>
 	{% for WordleResult in names %}
-		<li>{{ WordleResult.user_name }}</li>
+		<li>{{ WordleResult.user_name }} </li>
+		{{ WordleResult.result_date }}
+		<img src={% static "/WordleColourResult/images/sqorange.gif" %}>
+		<img src="/static/WordleColourResult/images/sqgrey.gif">
 	{% endfor %}
 </ul>
 
