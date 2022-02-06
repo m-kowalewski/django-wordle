@@ -1,0 +1,15 @@
+{% block title %}
+Wellcome home
+{% endblock %}
+
+{% block content %}
+<h1>Home page</h1>
+
+<ul>
+	{% for WordleResult in names %}
+		<li>{{ WordleResult.user_name }}</li>
+	{% endfor %}
+</ul>
+
+<h1>end page</h1>
+{% endblock %}
