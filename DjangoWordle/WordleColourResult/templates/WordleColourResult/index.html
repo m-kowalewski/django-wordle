@@ -27,11 +27,16 @@
 				{% csrf_token %}
 				<fieldset>
 					{% for item in ANSWERS %}
-						{{ item.1 }} <input type='radio' name="{{ WordleResult.id }}" value="{{ item.0 }}" /><br/>
+						<label for="{{ item.0 }}">{{ item.1 }}</label>
+						<input type='radio' name="result" id="{{ item.0 }}" value="{{ item.0 }}" ><br/>
 					{% endfor %}
 				</fieldset>
-				<input type="submit", name="save", value="apply">
+				<!-- <input type="submit" value="apply" name="{{ WordleResult.id }}"> -->
+				<button type="submit" name="button" value="{{ WordleResult.id }}"> APPLY </button>
 			</form>
+			<div id="my-div">
+				<a href='/admin' class="fill-div"><img src="/static/WordleColourResult/images/sqgrey.gif">blah blah</a>
+			</div>
 		{% endfor %}
 	</ul>
 

@@ -16,17 +16,31 @@ def index(request, result_id=None):
 	ordered_result = WordleResult.objects.order_by('-result_date')
 	ANSWERS = WordleResult.ANSWERS
 	if request.method == "POST":
+		data = request.POST
 		print(request.POST)
 		print(list(request.POST.items()))
-		q = list(request.POST.items())
-		p = q[1][0]
-		val = q[1][1]
+		#q = list(request.POST.items())
+		p = data.get('button')
+		val = data.get('result')
 		print(p, val)
 		result = WordleResult.objects.filter(pk=p)
 		for a in result:
 			print(a.answer)
 			a.answer = str(val)
 			a.save()
+	elif request.method == "GET":
+		data = request.GET
+		print(request.GET)
+		print(list(request.GET.items()))
+		#q = list(request.POST.items())
+		p = data.get('button')
+		val = data.get('result')
+		print(p, val)
+		result = WordleResult.objects.filter(pk=p)
+		for a in result:
+			print(a.answer)
+			a.answer = str(val)
+			a.save()		
 	return render(request, 'WordleColourResult/index.html', {'ANSWERS':ANSWERS, 'names':ordered_result, 'n':range(5)})
 
 
