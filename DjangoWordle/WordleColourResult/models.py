@@ -8,6 +8,11 @@ from django.contrib import admin
 class WordleResult(models.Model):
 	user_name = models.CharField(max_length=100)
 	result_date = models.DateTimeField('date solved')
+	table_width = 5
+	table_height = 6
+	table_try = [[0 for x in range(5)] for y in range(6)]
+	table_try[3][3] = 1
+	#table_try = [[0 for x in range(table_width)] for y in range(table_height)]
 	table_text = 'there will be a table'
 	ANSWERS = (
 		('G', 'Green'),

@@ -15,6 +15,7 @@ from .models import WordleResult, GraphicTable
 def index(request, result_id=None):
 	ordered_result = WordleResult.objects.order_by('-result_date')
 	ANSWERS = WordleResult.ANSWERS
+	TABLE = WordleResult.table_try
 	if request.method == "POST":
 		data = request.POST
 		print(request.POST)
@@ -41,7 +42,7 @@ def index(request, result_id=None):
 			print(a.answer)
 			a.answer = str(val)
 			a.save()		
-	return render(request, 'WordleColourResult/index.html', {'ANSWERS':ANSWERS, 'names':ordered_result, 'n':range(5)})
+	return render(request, 'WordleColourResult/index.html', {'ANSWERS':ANSWERS, 'names':ordered_result, 'n':range(5), 'table_try':TABLE })
 
 
 def table(request):

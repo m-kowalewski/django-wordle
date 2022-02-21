@@ -32,14 +32,38 @@
 					{% endfor %}
 				</fieldset>
 				<!-- <input type="submit" value="apply" name="{{ WordleResult.id }}"> -->
-				<button type="submit" name="button" value="{{ WordleResult.id }}"> APPLY </button>
+				<button type="submit" name="button" value="{{ WordleResult.id }}"><img src="/static/WordleColourResult/images/sqorange.gif"> APPLY </button>
 			</form>
 			<div id="my-div">
 				<a href='/admin' class="fill-div"><img src="/static/WordleColourResult/images/sqgrey.gif">blah blah</a>
 			</div>
 		{% endfor %}
 	</ul>
+	
+	<h1>Table_try</h1>
 
+	<ul>
+		<form method="post">
+			{% csrf_token %}
+			{% for i in table_try %}
+				<li>{% for x in i %}
+					{% if x == 0 %}
+						<button type="submit" name="table_button" value="{{i}}"><img src="/static/WordleColourResult/images/sqorange.gif"></button>
+					{% endif %}
+
+					{% if x == 1 %}
+					<a href="" class='fill-div'><img src="/static/WordleColourResult/images/sqgreen.gif"></a>
+					{% endif %}
+
+					{% if x == 2 %}
+					<img src="/static/WordleColourResult/images/sqgrey.gif">
+					{% endif %}				
+				{% endfor %}</li>
+			{% endfor %}
+			<button type="submit" name="table_save_button" value="save"> APPLY </button>
+		</form>
+	</ul>
+	
 	<h1>Table</h1>
 
 	<ul>
