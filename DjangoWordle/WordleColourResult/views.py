@@ -16,6 +16,8 @@ def index(request, result_id=None):
 	ordered_result = WordleResult.objects.order_by('-result_date')
 	ANSWERS = WordleResult.ANSWERS
 	TABLE = WordleResult.table_try
+	SIMPLE_TABLE = WordleResult.simple_table
+	LETTER_TABLE = WordleResult.letter_table
 	if request.method == "POST":
 		data = request.POST
 		print(request.POST)
@@ -42,7 +44,7 @@ def index(request, result_id=None):
 			print(a.answer)
 			a.answer = str(val)
 			a.save()		
-	return render(request, 'WordleColourResult/index.html', {'ANSWERS':ANSWERS, 'names':ordered_result, 'n':range(5), 'table_try':TABLE })
+	return render(request, 'WordleColourResult/index.html', {'ANSWERS':ANSWERS, 'names':ordered_result, 'n':range(5), 'table_try':TABLE, 'simple_table':SIMPLE_TABLE, 'letter_table':LETTER_TABLE })
 
 
 def table(request):

@@ -20,6 +20,29 @@
 			{{ WordleResult.result_date }}<br/>
 			{{ WordleResult.table_text }}<br/>
 			{{ WordleResult.answer }}<br/>
+			{{ WordleResult.simple_field }}<br/>
+			{{ WordleResult.letter_table }}<br/>
+			{% for j in WordleResult.letter_table %}
+				{% if j == 'Y' %}
+					<img src="/static/WordleColourResult/images/sqorange.gif">
+				{% endif %}
+
+				{% if j == 'G' %}
+					<a href=""><img src="/static/WordleColourResult/images/sqgreen.gif"></a>
+				{% endif %}
+					<!-- {% if x == 1 %}
+					<a href="" class='fill-div'><img src="/static/WordleColourResult/images/sqgreen.gif"></a>
+					{% endif %} -->
+
+				{% if j == 'B' %}
+					<img src="/static/WordleColourResult/images/sqgrey.gif">
+				{% endif %}
+
+				{% if j == 'E' %}
+					<br/>
+				{% endif %}
+			{% endfor %}
+			<br/>
 			
 			<img src={% static "/WordleColourResult/images/sqorange.gif" %}>
 			<img src="/static/WordleColourResult/images/sqgrey.gif"><br/>
@@ -52,8 +75,11 @@
 					{% endif %}
 
 					{% if x == 1 %}
-					<a href="" class='fill-div'><img src="/static/WordleColourResult/images/sqgreen.gif"></a>
+					<a href=""><img src="/static/WordleColourResult/images/sqgreen.gif"></a>
 					{% endif %}
+					<!-- {% if x == 1 %}
+					<a href="" class='fill-div'><img src="/static/WordleColourResult/images/sqgreen.gif"></a>
+					{% endif %} -->
 
 					{% if x == 2 %}
 					<img src="/static/WordleColourResult/images/sqgrey.gif">
