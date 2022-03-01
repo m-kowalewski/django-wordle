@@ -57,6 +57,18 @@
 				<!-- <input type="submit" value="apply" name="{{ WordleResult.id }}"> -->
 				<button type="submit" name="button" value="{{ WordleResult.id }}"><img src="/static/WordleColourResult/images/sqorange.gif"> APPLY </button>
 			</form>
+
+			<form method="post">
+				{% csrf_token %}
+				<fieldset>
+					<label for="letters_table">letter table</label>
+					<textarea name="letters_table" id="letters_table" cols="35" rows="1" >BBBBBEBBBBBEBBBBBEBBBBBEBBBBBEBBBBB</textarea>
+						<br/>
+				</fieldset>
+				<!--<input type="submit" value="apply" name="{{ WordleResult.id }}"> -->
+				<button type="submit" name="button2" value="{{ WordleResult.id }}"> APPLY </button>
+			</form>
+			
 			<div id="my-div">
 				<a href='/admin' class="fill-div"><img src="/static/WordleColourResult/images/sqgrey.gif">blah blah</a>
 			</div>

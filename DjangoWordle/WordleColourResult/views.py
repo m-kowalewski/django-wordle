@@ -23,14 +23,26 @@ def index(request, result_id=None):
 		print(request.POST)
 		print(list(request.POST.items()))
 		#q = list(request.POST.items())
-		p = data.get('button')
-		val = data.get('result')
-		print(p, val)
-		result = WordleResult.objects.filter(pk=p)
-		for a in result:
-			print(a.answer)
-			a.answer = str(val)
-			a.save()
+		p = data.get('button2')
+		if p == None:
+			p = data.get('button')
+			val = data.get('result')
+			print(p, val)
+			result = WordleResult.objects.filter(pk=p)
+			for a in result:
+				print(a.answer)
+				a.answer = str(val)
+				a.save()
+		else:
+			print('jestem pięknie w else')
+			val = data.get('letters_table')
+			print('p: ', p)
+			print('val: ', val)
+			result = WordleResult.objects.filter(pk=p)
+			for a in result:
+				print(a.letter_table)
+				a.letter_table = str(val)
+				a.save()
 	elif request.method == "GET":
 		data = request.GET
 		print(request.GET)
