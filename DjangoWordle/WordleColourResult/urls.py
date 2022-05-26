@@ -10,5 +10,6 @@ urlpatterns=[
 	#path('', views.IndexView.as_view(), name='index')
 	#ex: /WordleColourResult/table/
 	path('table/', views.table, name='table'),
+	path('TableTest/', views.tabletest, name='tabletest'),
 	#path('<int:result_id>/saves/', views.saves, name='saves')
 ]
