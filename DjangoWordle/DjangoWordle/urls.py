@@ -18,5 +18,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('WordleColourResult/', include('WordleColourResult.urls')),
+    path('account/', include('register.urls')),
     path('admin/', admin.site.urls),
 ]
