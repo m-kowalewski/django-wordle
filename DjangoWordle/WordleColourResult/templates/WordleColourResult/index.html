@@ -1,4 +1,5 @@
 <!doctype html>
+{% extends 'register/accountheader.html' %}
 {% load static %}
 <html>
 <head>
@@ -13,49 +14,54 @@
 <body>
 	{% block content %}
 	<h1>Home page</h1>
-	{% endblock %}
-	<ul>
-		{% for WordleResult in names %}
-			<li>User name: {{ WordleResult.user_name }} </li>
-			Result creation date: {{ WordleResult.result_date }}<br/>
-			Letter Table: {{ WordleResult.letter_table }}<br/>
-			{% for j in WordleResult.letter_table %}
-				{% if j == 'Y' %}
-					<img src="/static/WordleColourResult/images/sqorange.gif">
-				{% endif %}
 
-				{% if j == 'G' %}
-					<a href=""><img src="/static/WordleColourResult/images/sqgreen.gif"></a>
-				{% endif %}
-					<!-- {% if x == 1 %}
-					<a href="" class='fill-div'><img src="/static/WordleColourResult/images/sqgreen.gif"></a>
-					{% endif %} -->
+	{% if user.is_authenticated %}
+	    USER AUTHENTICATED
+		<ul>
+			{% for WordleResult in names %}
+				<li>User name: {{ WordleResult.user_name }} </li>
+				Result creation date: {{ WordleResult.result_date }}<br/>
+				Letter Table: {{ WordleResult.letter_table }}<br/>
+				{% for j in WordleResult.letter_table %}
+					{% if j == 'Y' %}
+						<img src="/static/WordleColourResult/images/sqorange.gif">
+					{% endif %}
 
-				{% if j == 'B' %}
-					<img src="/static/WordleColourResult/images/sqgrey.gif">
-				{% endif %}
+					{% if j == 'G' %}
+						<a href=""><img src="/static/WordleColourResult/images/sqgreen.gif"></a>
+					{% endif %}
+						<!-- {% if x == 1 %}
+						<a href="" class='fill-div'><img src="/static/WordleColourResult/images/sqgreen.gif"></a>
+						{% endif %} -->
 
-				{% if j == 'E' %}
-					<br/>
-				{% endif %}
-			{% endfor %}
-			<br/>
-			
-			<form method="post">
-				{% csrf_token %}
-				<fieldset>
-					<label for="letters_table">letter table</label>
-					<textarea name="letters_table" id="letters_table" cols="35" rows="1" >BBBBBEBBBBBEBBBBBEBBBBBEBBBBBEBBBBB</textarea>
+					{% if j == 'B' %}
+						<img src="/static/WordleColourResult/images/sqgrey.gif">
+					{% endif %}
+
+					{% if j == 'E' %}
 						<br/>
-				</fieldset>
-				<!--<input type="submit" value="apply" name="{{ WordleResult.id }}"> -->
-				<button type="submit" name="button2" value="{{ WordleResult.id }}"> APPLY </button>
-			</form>
+					{% endif %}
+				{% endfor %}
+				<br/>
+				
+				<form method="post">
+					{% csrf_token %}
+					<fieldset>
+						<label for="letters_table">letter table</label>
+						<textarea name="letters_table" id="letters_table" cols="35" rows="1" >BBBBBEBBBBBEBBBBBEBBBBBEBBBBBEBBBBB</textarea>
+							<br/>
+					</fieldset>
+					<!--<input type="submit" value="apply" name="{{ WordleResult.id }}"> -->
+					<button type="submit" name="button2" value="{{ WordleResult.id }}"> APPLY </button>
+				</form>
 
-		{% endfor %}
-	</ul>
+			{% endfor %}
+		</ul>
+	{% else %}
+		USER NOT AUTHENTICATED
+	{% endif %}
 
 	<h1>end page</h1>
-	
+	{% endblock %}
 </body>
 </html>
