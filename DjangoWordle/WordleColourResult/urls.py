@@ -11,5 +11,6 @@ urlpatterns=[
 	#ex: /WordleColourResult/table/
 	path('table/', views.table, name='table'),
 	path('TableTest/', views.tabletest, name='tabletest'),
+	path('usertable/', views.usertable, name='usertable'),
 	#path('<int:result_id>/saves/', views.saves, name='saves')
 ]

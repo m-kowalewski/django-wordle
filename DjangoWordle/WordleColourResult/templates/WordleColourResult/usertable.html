@@ -6,7 +6,6 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'WordleColourResult/style.css' %}">
 
 	{% block title %}
-	Wellcome home
 	{% endblock %}
 	<img src="/static/WordleColourResult/images/sqgrey.gif">
 </head>
@@ -14,15 +13,15 @@
 <body>
 	{% block content %}
 	<h1>Home page</h1>
-
+	
 	{% if user.is_authenticated %}
-	    USER AUTHENTICATED
+	    USER AUTHENTICATED <br/>
+	    Logged user: {{user.username}}<br/>
 		<ul>
-			{% for WordleResult in names %}
-				<li>User name: {{ WordleResult.user_name }} </li>
-				Result creation date: {{ WordleResult.result_date }}<br/>
-				Letter Table: {{ WordleResult.letter_table }}<br/>
-				{% for j in WordleResult.letter_table %}
+			{% for UserResult in UR %}
+				<li>User name: {{ UserResult }} </li>
+				Result Letters: {{ UserResult.result_letters }}<br/>
+				{% for j in UserResult.result_letters %}
 					{% if j == 'Y' %}
 						<img src="/static/WordleColourResult/images/sqorange.gif">
 					{% endif %}
@@ -47,12 +46,12 @@
 				<form method="post">
 					{% csrf_token %}
 					<fieldset>
-						<label for="letters_table">letter table</label>
-						<textarea name="letters_table" id="letters_table" cols="35" rows="1" >{{WordleResult.letter_table}}</textarea>
+						<label for="new_result_letters">Chenge result letters:</label>
+						<textarea name="new_result_letters" id="new_result_letters" cols="50" rows="1" >{{UserResult.result_letters}}</textarea>
 							<br/>
 					</fieldset>
 					<!--<input type="submit" value="apply" name="{{ WordleResult.id }}"> -->
-					<button type="submit" name="button2" value="{{ WordleResult.id }}"> APPLY </button>
+					<button type="submit" name="button2" value="{{ UserResult.id }}"> APPLY </button>
 				</form>
 
 			{% endfor %}

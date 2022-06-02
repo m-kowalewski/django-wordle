@@ -1,8 +1,7 @@
 from django.db import models
-
-from django.db import models
 from django.utils import timezone
 from django.contrib import admin
+from django.contrib.auth.models import User
 
 
 class WordleResult(models.Model):
@@ -35,3 +34,9 @@ class GraphicTable(models.Model):
 	wordleresult = models.ForeignKey(WordleResult, on_delete=models.CASCADE)
 	
 	table = 'there will be a table'
+
+class UserResult(models.Model):
+	owner = models.ForeignKey(User, on_delete=models.CASCADE)
+	result_letters = models.CharField(max_length=35, default='BBBBBEBBBBBEBBBBBEBBBBBEBBBBBEBBBBB')
+	def __str__(self):
+		return str(self.owner)

@@ -3,7 +3,7 @@ from django.views import generic
 from django.utils import timezone
 from django.http import HttpResponse, HttpResponseRedirect
 
-from .models import WordleResult, GraphicTable
+from .models import WordleResult, GraphicTable, UserResult
 
 #class IndexView(generic.ListView):
 #	template_name = 'WordleColourResult/index.html'
@@ -112,3 +112,25 @@ def table(request):
 	#answer = instance.
 	return render(request, 'WordleColourResult/table.html', {'answer':answer, 'names':ordered_result, 'n':range(5)})#,{'answer':answer})#, 'table':table})
 
+def usertable(request, result_id=None):
+	UR = UserResult.objects.all()
+	if request.method == "POST":
+		data = request.POST
+		print(request.POST)
+		print(list(request.POST.items()))
+		#q = list(request.POST.items())
+		p = data.get('button2')
+		print('jestem pięknie w else')
+		val = data.get('new_result_letters')
+		print('p: ', p)
+		print('val: ', val)
+		result = UserResult.objects.filter(pk=p)
+		for a in result:
+			print(a.result_letters)
+			a.result_letters = str(val)
+			a.save()
+	elif request.method == "GET":
+		data = request.GET
+		print(request.GET)
+		print(list(request.GET.items()))	
+	return render(request, 'WordleColourResult/usertable.html', {'UR':UR, 'n':range(5) })
