@@ -4,127 +4,127 @@
 {% load static %}
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="{% static 'WordleColourResult/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'WordleColourResult/style.css' %}">
 
-	{% block title %}
-	Wellcome TEST PAGE
-	{% endblock %}
-	<img src="/static/WordleColourResult/images/sqgrey.gif">
+    {% block title %}
+    Wellcome TEST PAGE
+    {% endblock %}
+    <img src="/static/WordleColourResult/images/sqgrey.gif">
 </head>
 
 <body>
-	
-	{% block content %}
-	<h1>TEST page. User name: {{user.username}}</h1>
-	{% if user.is_authenticated %}
+    
+    {% block content %}
+    <h1>TEST page. User name: {{user.username}}</h1>
+    {% if user.is_authenticated %}
 
-	    USER AUTHENTICATED
+        USER AUTHENTICATED
 
-		<ul>
-			{% for WordleResult in names %}
-				<li>{{ WordleResult.user_name }} </li>
-				{{ WordleResult.result_date }}<br/>
-				{{ WordleResult.table_text }}<br/>
-				{{ WordleResult.answer }}<br/>
-				{{ WordleResult.simple_field }}<br/>
-				{{ WordleResult.letter_table }}<br/>
-				{% for j in WordleResult.letter_table %}
-					{% if j == 'Y' %}
-						<img src="/static/WordleColourResult/images/sqorange.gif">
-					{% endif %}
+        <ul>
+            {% for WordleResult in names %}
+                <li>{{ WordleResult.user_name }} </li>
+                {{ WordleResult.result_date }}<br/>
+                {{ WordleResult.table_text }}<br/>
+                {{ WordleResult.answer }}<br/>
+                {{ WordleResult.simple_field }}<br/>
+                {{ WordleResult.letter_table }}<br/>
+                {% for j in WordleResult.letter_table %}
+                    {% if j == 'Y' %}
+                        <img src="/static/WordleColourResult/images/sqorange.gif">
+                    {% endif %}
 
-					{% if j == 'G' %}
-						<a href=""><img src="/static/WordleColourResult/images/sqgreen.gif"></a>
-					{% endif %}
-						<!-- {% if x == 1 %}
-						<a href="" class='fill-div'><img src="/static/WordleColourResult/images/sqgreen.gif"></a>
-						{% endif %} -->
+                    {% if j == 'G' %}
+                        <a href=""><img src="/static/WordleColourResult/images/sqgreen.gif"></a>
+                    {% endif %}
+                        <!-- {% if x == 1 %}
+                        <a href="" class='fill-div'><img src="/static/WordleColourResult/images/sqgreen.gif"></a>
+                        {% endif %} -->
 
-					{% if j == 'B' %}
-						<img src="/static/WordleColourResult/images/sqgrey.gif">
-					{% endif %}
+                    {% if j == 'B' %}
+                        <img src="/static/WordleColourResult/images/sqgrey.gif">
+                    {% endif %}
 
-					{% if j == 'E' %}
-						<br/>
-					{% endif %}
-				{% endfor %}
-				<br/>
-				
-				<img src={% static "/WordleColourResult/images/sqorange.gif" %}>
-				<img src="/static/WordleColourResult/images/sqgrey.gif"><br/>
-				<form method="post">
-					{% csrf_token %}
-					<fieldset>
-						{% for item in ANSWERS %}
-							<label for="{{ item.0 }}">{{ item.1 }}</label>
-							<input type='radio' name="result" id="{{ item.0 }}" value="{{ item.0 }}" ><br/>
-						{% endfor %}
-					</fieldset>
-					<!-- <input type="submit" value="apply" name="{{ WordleResult.id }}"> -->
-					<button type="submit" name="button" value="{{ WordleResult.id }}"><img src="/static/WordleColourResult/images/sqorange.gif"> APPLY </button>
-				</form>
+                    {% if j == 'E' %}
+                        <br/>
+                    {% endif %}
+                {% endfor %}
+                <br/>
+                
+                <img src={% static "/WordleColourResult/images/sqorange.gif" %}>
+                <img src="/static/WordleColourResult/images/sqgrey.gif"><br/>
+                <form method="post">
+                    {% csrf_token %}
+                    <fieldset>
+                        {% for item in ANSWERS %}
+                            <label for="{{ item.0 }}">{{ item.1 }}</label>
+                            <input type='radio' name="result" id="{{ item.0 }}" value="{{ item.0 }}" ><br/>
+                        {% endfor %}
+                    </fieldset>
+                    <!-- <input type="submit" value="apply" name="{{ WordleResult.id }}"> -->
+                    <button type="submit" name="button" value="{{ WordleResult.id }}"><img src="/static/WordleColourResult/images/sqorange.gif"> APPLY </button>
+                </form>
 
-				<form method="post">
-					{% csrf_token %}
-					<fieldset>
-						<label for="letters_table">letter table</label>
-						<textarea name="letters_table" id="letters_table" cols="35" rows="1" >{{WordleResult.letter_table}}</textarea>
-							<br/>
-					</fieldset>
-					<!--<input type="submit" value="apply" name="{{ WordleResult.id }}"> -->
-					<button type="submit" name="button2" value="{{ WordleResult.id }}"> APPLY </button>
-				</form>
-				
-				<div id="my-div">
-					<a href='/admin' class="fill-div"><img src="/static/WordleColourResult/images/sqgrey.gif">blah blah</a>
-				</div>
-			{% endfor %}
-		</ul>
-		
-		<h1>Table_try</h1>
+                <form method="post">
+                    {% csrf_token %}
+                    <fieldset>
+                        <label for="letters_table">letter table</label>
+                        <textarea name="letters_table" id="letters_table" cols="35" rows="1" >{{WordleResult.letter_table}}</textarea>
+                            <br/>
+                    </fieldset>
+                    <!--<input type="submit" value="apply" name="{{ WordleResult.id }}"> -->
+                    <button type="submit" name="button2" value="{{ WordleResult.id }}"> APPLY </button>
+                </form>
+                
+                <div id="my-div">
+                    <a href='/admin' class="fill-div"><img src="/static/WordleColourResult/images/sqgrey.gif">blah blah</a>
+                </div>
+            {% endfor %}
+        </ul>
+        
+        <h1>Table_try</h1>
 
-		<ul>
-			<form method="post">
-				{% csrf_token %}
-				{% for i in table_try %}
-					<li>{% for x in i %}
-						{% if x == 0 %}
-							<button type="submit" name="table_button" value="{{i}}"><img src="/static/WordleColourResult/images/sqorange.gif"></button>
-						{% endif %}
+        <ul>
+            <form method="post">
+                {% csrf_token %}
+                {% for i in table_try %}
+                    <li>{% for x in i %}
+                        {% if x == 0 %}
+                            <button type="submit" name="table_button" value="{{i}}"><img src="/static/WordleColourResult/images/sqorange.gif"></button>
+                        {% endif %}
 
-						{% if x == 1 %}
-						<a href=""><img src="/static/WordleColourResult/images/sqgreen.gif"></a>
-						{% endif %}
-						<!-- {% if x == 1 %}
-						<a href="" class='fill-div'><img src="/static/WordleColourResult/images/sqgreen.gif"></a>
-						{% endif %} -->
+                        {% if x == 1 %}
+                        <a href=""><img src="/static/WordleColourResult/images/sqgreen.gif"></a>
+                        {% endif %}
+                        <!-- {% if x == 1 %}
+                        <a href="" class='fill-div'><img src="/static/WordleColourResult/images/sqgreen.gif"></a>
+                        {% endif %} -->
 
-						{% if x == 2 %}
-						<img src="/static/WordleColourResult/images/sqgrey.gif">
-						{% endif %}				
-					{% endfor %}</li>
-				{% endfor %}
-				<button type="submit" name="table_save_button" value="save"> APPLY </button>
-			</form>
-		</ul>
-		
-		<h1>Table</h1>
+                        {% if x == 2 %}
+                        <img src="/static/WordleColourResult/images/sqgrey.gif">
+                        {% endif %}                
+                    {% endfor %}</li>
+                {% endfor %}
+                <button type="submit" name="table_save_button" value="save"> APPLY </button>
+            </form>
+        </ul>
+        
+        <h1>Table</h1>
 
-		<ul>
-			{% for i in n %}
-				<li>{% for x in n %}
-					<img src="/static/WordleColourResult/images/sqgrey.gif">
-				{% endfor %}</li>
-			{% endfor %}
-		</ul>
+        <ul>
+            {% for i in n %}
+                <li>{% for x in n %}
+                    <img src="/static/WordleColourResult/images/sqgrey.gif">
+                {% endfor %}</li>
+            {% endfor %}
+        </ul>
 
-	{% else %}
+    {% else %}
 
-    	USER NOT  AUTHENTICATED
+        USER NOT  AUTHENTICATED
 
     {% endif %}
 
-	<h1>end page</h1>
-	{% endblock %}
+    <h1>end page</h1>
+    {% endblock %}
 </body>
 </html>

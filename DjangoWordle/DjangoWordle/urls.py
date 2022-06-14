@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+
 urlpatterns = [
     path('WordleColourResult/', include('WordleColourResult.urls')),
     path('account/', include('register.urls')),

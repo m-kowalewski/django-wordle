@@ -6,131 +6,168 @@ from django.http import HttpResponse, HttpResponseRedirect
 from .models import WordleResult, GraphicTable, UserResult
 
 #class IndexView(generic.ListView):
-#	template_name = 'WordleColourResult/index.html'
-#	context_object_name = 'names'
-#	
-#	def get_queryset(self):
-#		return WordleResult.objects.order_by('-result_date')
+#    template_name = 'WordleColourResult/index.html'
+#    context_object_name = 'names'
+#    def get_queryset(self):
+#        return WordleResult.objects.order_by('-result_date')
+
+def usertable(request, result_id=None):
+    ''' main part of project '''
+    user_result = UserResult.objects.all()
+    if request.method == "POST":
+        data = request.POST
+        print(request.POST)
+        print(list(request.POST.items()))
+        button_2 = data.get('button2')
+        val = data.get('new_result_letters')
+        print('button_2: ', button_2)
+        print('val: ', val)
+        result = UserResult.objects.filter(pk=button_2)
+        for item in result:
+            print(item.result_letters)
+            item.result_letters = str(val)
+            item.save()
+    elif request.method == "GET":
+        data = request.GET
+        print(request.GET)
+        print(list(request.GET.items()))
+    return render(
+            request,
+            'WordleColourResult/usertable.html',
+            {
+                'UR':user_result, 'n':range(5)
+            }
+        )
 
 def index(request, result_id=None):
-	ordered_result = WordleResult.objects.order_by('-result_date')
-	ANSWERS = WordleResult.ANSWERS
-	TABLE = WordleResult.table_try
-	SIMPLE_TABLE = WordleResult.simple_table
-	LETTER_TABLE = WordleResult.letter_table
-	if request.method == "POST":
-		data = request.POST
-		print(request.POST)
-		print(list(request.POST.items()))
-		#q = list(request.POST.items())
-		p = data.get('button2')
-		if p == None:
-			p = data.get('button')
-			val = data.get('result')
-			print(p, val)
-			result = WordleResult.objects.filter(pk=p)
-			for a in result:
-				print(a.answer)
-				a.answer = str(val)
-				a.save()
-		else:
-			print('jestem pięknie w else')
-			val = data.get('letters_table')
-			print('p: ', p)
-			print('val: ', val)
-			result = WordleResult.objects.filter(pk=p)
-			for a in result:
-				print(a.letter_table)
-				a.letter_table = str(val)
-				a.save()
-	elif request.method == "GET":
-		data = request.GET
-		print(request.GET)
-		print(list(request.GET.items()))
-		#q = list(request.POST.items())
-		p = data.get('button')
-		val = data.get('result')
-		print(p, val)
-		result = WordleResult.objects.filter(pk=p)
-		for a in result:
-			print(a.answer)
-			a.answer = str(val)
-			a.save()		
-	return render(request, 'WordleColourResult/index.html', {'ANSWERS':ANSWERS, 'names':ordered_result, 'n':range(5), 'table_try':TABLE, 'simple_table':SIMPLE_TABLE, 'letter_table':LETTER_TABLE })
+    ''' old function '''
+    ordered_result = WordleResult.objects.order_by('-result_date')
+    ANSWERS = WordleResult.ANSWERS
+    TABLE = WordleResult.table_try
+    SIMPLE_TABLE = WordleResult.simple_table
+    LETTER_TABLE = WordleResult.letter_table
+    if request.method == "POST":
+        data = request.POST
+        print(request.POST)
+        print(list(request.POST.items()))
+        #q = list(request.POST.items())
+        button_2 = data.get('button2')
+        if button_2 is None:
+            button_2 = data.get('button')
+            val = data.get('result')
+            print(button_2, val)
+            result = WordleResult.objects.filter(pk = button_2)
+            for item in result:
+                print(item.answer)
+                item.answer = str(val)
+                item.save()
+        else:
+            print('jestem pięknie w else')
+            val = data.get('letters_table')
+            print('button_2: ', button_2)
+            print('val: ', val)
+            result = WordleResult.objects.filter(pk = button_2)
+            for item in result:
+                print(item.letter_table)
+                item.letter_table = str(val)
+                item.save()
+    elif request.method == "GET":
+        data = request.GET
+        print(request.GET)
+        print(list(request.GET.items()))
+        #q = list(request.POST.items())
+        button_2 = data.get('button')
+        val = data.get('result')
+        print(button_2, val)
+        result = WordleResult.objects.filter(pk = button_2)
+        for item in result:
+            print(item.answer)
+            item.answer = str(val)
+            item.save()
+    return render(
+            request,
+            'WordleColourResult/index.html',
+            {
+                'ANSWERS':ANSWERS,
+                'names':ordered_result,
+                'n':range(5),
+                'table_try':TABLE,
+                'simple_table':SIMPLE_TABLE,
+                'letter_table':LETTER_TABLE
+            }
+        )
 
 def tabletest(request, result_id=None):
-	ordered_result = WordleResult.objects.order_by('-result_date')
-	ANSWERS = WordleResult.ANSWERS
-	TABLE = WordleResult.table_try
-	SIMPLE_TABLE = WordleResult.simple_table
-	LETTER_TABLE = WordleResult.letter_table
-	if request.method == "POST":
-		data = request.POST
-		print(request.POST)
-		print(list(request.POST.items()))
-		#q = list(request.POST.items())
-		p = data.get('button2')
-		if p == None:
-			p = data.get('button')
-			val = data.get('result')
-			print(p, val)
-			result = WordleResult.objects.filter(pk=p)
-			for a in result:
-				print(a.answer)
-				a.answer = str(val)
-				a.save()
-		else:
-			print('jestem pięknie w else')
-			val = data.get('letters_table')
-			print('p: ', p)
-			print('val: ', val)
-			result = WordleResult.objects.filter(pk=p)
-			for a in result:
-				print(a.letter_table)
-				a.letter_table = str(val)
-				a.save()
-	elif request.method == "GET":
-		data = request.GET
-		print(request.GET)
-		print(list(request.GET.items()))
-		#q = list(request.POST.items())
-		p = data.get('button')
-		val = data.get('result')
-		print(p, val)
-		result = WordleResult.objects.filter(pk=p)
-		for a in result:
-			print(a.answer)
-			a.answer = str(val)
-			a.save()		
-	return render(request, 'WordleColourResult/tabletest.html', {'ANSWERS':ANSWERS, 'names':ordered_result, 'n':range(5), 'table_try':TABLE, 'simple_table':SIMPLE_TABLE, 'letter_table':LETTER_TABLE })
+    ''' function for testing '''
+    ordered_result = WordleResult.objects.order_by('-result_date')
+    ANSWERS = WordleResult.ANSWERS
+    TABLE = WordleResult.table_try
+    SIMPLE_TABLE = WordleResult.simple_table
+    LETTER_TABLE = WordleResult.letter_table
+    if request.method == "POST":
+        data = request.POST
+        print(request.POST)
+        print(list(request.POST.items()))
+        #q = list(request.POST.items())
+        button_2 = data.get('button2')
+        if button_2 is None:
+            button_2 = data.get('button')
+            val = data.get('result')
+            print(button_2, val)
+            result = WordleResult.objects.filter(pk=button_2)
+            for item in result:
+                print(item.answer)
+                item.answer = str(val)
+                item.save()
+        else:
+            print('jestem pięknie w else')
+            val = data.get('letters_table')
+            print('button_2: ', button_2)
+            print('val: ', val)
+            result = WordleResult.objects.filter(pk = button_2)
+            for item in result:
+                print(item.letter_table)
+                item.letter_table = str(val)
+                item.save()
+    elif request.method == "GET":
+        data = request.GET
+        print(request.GET)
+        print(list(request.GET.items()))
+        #q = list(request.POST.items())
+        button_2 = data.get('button')
+        val = data.get('result')
+        print(button_2, val)
+        result = WordleResult.objects.filter(pk = button_2)
+        for item in result:
+            print(item.answer)
+            item.answer = str(val)
+            item.save()
+    return render(
+            request,
+            'WordleColourResult/tabletest.html',
+            {
+                'ANSWERS':ANSWERS,
+                'names':ordered_result,
+                'n':range(5),
+                'table_try':TABLE,
+                'simple_table':SIMPLE_TABLE,
+                'letter_table':LETTER_TABLE
+            }
+        )
 
 
 def table(request):
-	instance = GraphicTable()
-	ordered_result = WordleResult.objects.order_by('-result_date')
-	answer = GraphicTable.objects
-	#answer = instance.
-	return render(request, 'WordleColourResult/table.html', {'answer':answer, 'names':ordered_result, 'n':range(5)})#,{'answer':answer})#, 'table':table})
-
-def usertable(request, result_id=None):
-	UR = UserResult.objects.all()
-	if request.method == "POST":
-		data = request.POST
-		print(request.POST)
-		print(list(request.POST.items()))
-		#q = list(request.POST.items())
-		p = data.get('button2')
-		print('jestem pięknie w else')
-		val = data.get('new_result_letters')
-		print('p: ', p)
-		print('val: ', val)
-		result = UserResult.objects.filter(pk=p)
-		for a in result:
-			print(a.result_letters)
-			a.result_letters = str(val)
-			a.save()
-	elif request.method == "GET":
-		data = request.GET
-		print(request.GET)
-		print(list(request.GET.items()))	
-	return render(request, 'WordleColourResult/usertable.html', {'UR':UR, 'n':range(5) })
+    ''' generate only table '''
+    #instance = GraphicTable()
+    ordered_result = WordleResult.objects.order_by('-result_date')
+    answer = GraphicTable.objects
+    #answer = instance.
+    return render(
+            request,
+            'WordleColourResult/table.html',
+            {
+                'answer':answer,
+                'names':ordered_result,
+                'n':range(5)
+            }
+        )#,{'answer':answer})#, 'table':table})

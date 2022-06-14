@@ -3,64 +3,64 @@
 {% load static %}
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="{% static 'WordleColourResult/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'WordleColourResult/style.css' %}">
 
-	{% block title %}
-	{% endblock %}
-	<img src="/static/WordleColourResult/images/sqgrey.gif">
+    {% block title %}
+    {% endblock %}
+    <img src="/static/WordleColourResult/images/sqgrey.gif">
 </head>
 
 <body>
-	{% block content %}
-	<h1>Home page</h1>
-	
-	{% if user.is_authenticated %}
-	    USER AUTHENTICATED <br/>
-	    Logged user: {{user.username}}<br/>
-		<ul>
-			{% for UserResult in UR %}
-				<li>User name: {{ UserResult }} </li>
-				Result Letters: {{ UserResult.result_letters }}<br/>
-				{% for j in UserResult.result_letters %}
-					{% if j == 'Y' %}
-						<img src="/static/WordleColourResult/images/sqorange.gif">
-					{% endif %}
+    {% block content %}
+    <h1>Home page</h1>
+    
+    {% if user.is_authenticated %}
+        USER AUTHENTICATED <br/>
+        Logged user: {{user.username}}<br/>
+        <ul>
+            {% for UserResult in UR %}
+                <li>User name: {{ UserResult }} </li>
+                Result Letters: {{ UserResult.result_letters }}<br/>
+                {% for j in UserResult.result_letters %}
+                    {% if j == 'Y' %}
+                        <img src="/static/WordleColourResult/images/sqorange.gif">
+                    {% endif %}
 
-					{% if j == 'G' %}
-						<a href=""><img src="/static/WordleColourResult/images/sqgreen.gif"></a>
-					{% endif %}
-						<!-- {% if x == 1 %}
-						<a href="" class='fill-div'><img src="/static/WordleColourResult/images/sqgreen.gif"></a>
-						{% endif %} -->
+                    {% if j == 'G' %}
+                        <a href=""><img src="/static/WordleColourResult/images/sqgreen.gif"></a>
+                    {% endif %}
+                        <!-- {% if x == 1 %}
+                        <a href="" class='fill-div'><img src="/static/WordleColourResult/images/sqgreen.gif"></a>
+                        {% endif %} -->
 
-					{% if j == 'B' %}
-						<img src="/static/WordleColourResult/images/sqgrey.gif">
-					{% endif %}
+                    {% if j == 'B' %}
+                        <img src="/static/WordleColourResult/images/sqgrey.gif">
+                    {% endif %}
 
-					{% if j == 'E' %}
-						<br/>
-					{% endif %}
-				{% endfor %}
-				<br/>
-				
-				<form method="post">
-					{% csrf_token %}
-					<fieldset>
-						<label for="new_result_letters">Chenge result letters:</label>
-						<textarea name="new_result_letters" id="new_result_letters" cols="50" rows="1" >{{UserResult.result_letters}}</textarea>
-							<br/>
-					</fieldset>
-					<!--<input type="submit" value="apply" name="{{ WordleResult.id }}"> -->
-					<button type="submit" name="button2" value="{{ UserResult.id }}"> APPLY </button>
-				</form>
+                    {% if j == 'E' %}
+                        <br/>
+                    {% endif %}
+                {% endfor %}
+                <br/>
+                
+                <form method="post">
+                    {% csrf_token %}
+                    <fieldset>
+                        <label for="new_result_letters">Chenge result letters:</label>
+                        <textarea name="new_result_letters" id="new_result_letters" cols="50" rows="1" >{{UserResult.result_letters}}</textarea>
+                            <br/>
+                    </fieldset>
+                    <!--<input type="submit" value="apply" name="{{ WordleResult.id }}"> -->
+                    <button type="submit" name="button2" value="{{ UserResult.id }}"> APPLY </button>
+                </form>
 
-			{% endfor %}
-		</ul>
-	{% else %}
-		USER NOT AUTHENTICATED
-	{% endif %}
+            {% endfor %}
+        </ul>
+    {% else %}
+        USER NOT AUTHENTICATED
+    {% endif %}
 
-	<h1>end page</h1>
-	{% endblock %}
+    <h1>end page</h1>
+    {% endblock %}
 </body>
 </html>
