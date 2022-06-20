@@ -19,7 +19,9 @@
         Logged user: {{user.username}}<br/>
         <ul>
             {% for UserResult in UR %}
-                <li>User name: {{ UserResult }} </li>
+                <li>User name: {{ UserResult }}</li>
+                <li>Date: {{ UserResult.date_update }}</li>
+                <li>Time: {{ UserResult.time_update }}</li>
                 Result Letters: {{ UserResult.result_letters }}<br/>
                 {% for j in UserResult.result_letters %}
                     {% if j == 'Y' %}
@@ -42,17 +44,18 @@
                     {% endif %}
                 {% endfor %}
                 <br/>
-                
-                <form method="post">
-                    {% csrf_token %}
-                    <fieldset>
-                        <label for="new_result_letters">Chenge result letters:</label>
-                        <textarea name="new_result_letters" id="new_result_letters" cols="50" rows="1" >{{UserResult.result_letters}}</textarea>
-                            <br/>
-                    </fieldset>
-                    <!--<input type="submit" value="apply" name="{{ WordleResult.id }}"> -->
-                    <button type="submit" name="button2" value="{{ UserResult.id }}"> APPLY </button>
-                </form>
+                {% if user == UserResult.owner or user.username == 'admin' %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <fieldset>
+                            <label for="new_result_letters">Change result letters:</label>
+                            <textarea name="new_result_letters" id="new_result_letters" cols="50" rows="1" >{{UserResult.result_letters}}</textarea>
+                                <br/>
+                        </fieldset>
+                        <!--<input type="submit" value="apply" name="{{ WordleResult.id }}"> -->
+                        <button type="submit" name="button2" value="{{ UserResult.id }}"> APPLY </button>
+                    </form>
+                {% endif %}
 
             {% endfor %}
         </ul>

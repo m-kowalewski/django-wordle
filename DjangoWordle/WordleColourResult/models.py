@@ -2,10 +2,14 @@ from django.db import models
 from django.utils import timezone
 from django.contrib import admin
 from django.contrib.auth.models import User
+import datetime
 
 class UserResult(models.Model):
     ''' main class of project '''
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    #owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.OneToOneField(User, on_delete=models.CASCADE)
+    date_update = models.DateField(default=datetime.date.today)
+    time_update = models.TimeField(default=datetime.time(0,0,0))
     result_letters = models.CharField(max_length=35, default='BBBBBEBBBBBEBBBBBEBBBBBEBBBBBEBBBBB')
     def __str__(self):
         return str(self.owner)

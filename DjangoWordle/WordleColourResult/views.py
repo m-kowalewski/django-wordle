@@ -2,8 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 from django.utils import timezone
 from django.http import HttpResponse, HttpResponseRedirect
-
 from .models import WordleResult, GraphicTable, UserResult
+import datetime
 
 #class IndexView(generic.ListView):
 #    template_name = 'WordleColourResult/index.html'
@@ -11,33 +11,34 @@ from .models import WordleResult, GraphicTable, UserResult
 #    def get_queryset(self):
 #        return WordleResult.objects.order_by('-result_date')
 
-def usertable(request, result_id=None):
+def usertable(request):
     ''' main part of project '''
     user_result = UserResult.objects.all()
     if request.method == "POST":
         data = request.POST
-        print(request.POST)
-        print(list(request.POST.items()))
         button_2 = data.get('button2')
-        val = data.get('new_result_letters')
+        val = data.get('new_result_letters')  
+        print('REQUESTED USER: ', request.user)
+        print('REQUEST POST: ', request.POST)
+        print('LISTA REQUEST.POST.ITEMS: ', list(request.POST.items()))
         print('button_2: ', button_2)
         print('val: ', val)
-        result = UserResult.objects.filter(pk=button_2)
-        for item in result:
-            print(item.result_letters)
-            item.result_letters = str(val)
-            item.save()
+        result = UserResult.objects.filter(pk=button_2)[0]
+        result.result_letters = str(val)
+        result.date_update = datetime.date.today()
+        result.time_update = datetime.datetime.now()
+        result.save()
     elif request.method == "GET":
         data = request.GET
         print(request.GET)
         print(list(request.GET.items()))
     return render(
-            request,
-            'WordleColourResult/usertable.html',
-            {
-                'UR':user_result, 'n':range(5)
-            }
-        )
+        request,
+        'WordleColourResult/usertable.html',
+        {
+            'UR':user_result, 'n':range(5)
+        }
+    )
 
 def index(request, result_id=None):
     ''' old function '''
@@ -85,17 +86,17 @@ def index(request, result_id=None):
             item.answer = str(val)
             item.save()
     return render(
-            request,
-            'WordleColourResult/index.html',
-            {
-                'ANSWERS':ANSWERS,
-                'names':ordered_result,
-                'n':range(5),
-                'table_try':TABLE,
-                'simple_table':SIMPLE_TABLE,
-                'letter_table':LETTER_TABLE
-            }
-        )
+        request,
+        'WordleColourResult/index.html',
+        {
+            'ANSWERS':ANSWERS,
+            'names':ordered_result,
+            'n':range(5),
+            'table_try':TABLE,
+            'simple_table':SIMPLE_TABLE,
+            'letter_table':LETTER_TABLE
+        }
+    )
 
 def tabletest(request, result_id=None):
     ''' function for testing '''
@@ -143,17 +144,17 @@ def tabletest(request, result_id=None):
             item.answer = str(val)
             item.save()
     return render(
-            request,
-            'WordleColourResult/tabletest.html',
-            {
-                'ANSWERS':ANSWERS,
-                'names':ordered_result,
-                'n':range(5),
-                'table_try':TABLE,
-                'simple_table':SIMPLE_TABLE,
-                'letter_table':LETTER_TABLE
-            }
-        )
+        request,
+        'WordleColourResult/tabletest.html',
+        {
+            'ANSWERS':ANSWERS,
+            'names':ordered_result,
+            'n':range(5),
+            'table_try':TABLE,
+            'simple_table':SIMPLE_TABLE,
+            'letter_table':LETTER_TABLE
+        }
+    )
 
 
 def table(request):

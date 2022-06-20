@@ -30,7 +30,7 @@ def login_request(request):
             if user is not None:
                 login(request, user)
                 messages.info(request, f"You are now logged in as {username}.")
-                return redirect("WordleColourResult:tabletest")
+                return redirect("WordleColourResult:usertable")
             else:
                 messages.error(request, "Invalid username or password.")
         else:
@@ -42,4 +42,4 @@ def logout_request(request):
     ''' user logout request'''
     logout(request)
     messages.info(request, "You have successfully logged out.")
-    return redirect("WordleColourResult:tabletest")
+    return redirect("WordleColourResult:usertable")
