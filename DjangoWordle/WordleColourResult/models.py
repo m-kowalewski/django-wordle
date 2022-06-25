@@ -1,8 +1,18 @@
+from tkinter import CASCADE
 from django.db import models
 from django.utils import timezone
 from django.contrib import admin
 from django.contrib.auth.models import User
 import datetime
+
+class RealUserResult(models.Model):
+    ''' Model for REAL USERS '''
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    result_date = models.DateField()
+    result_time = models.TimeField()
+    result_letters = models.CharField(max_length=35, default='BBBBBEBBBBBEBBBBBEBBBBBEBBBBBEBBBBB')
+    def __str__(self):
+        return str(self.result_date) + ' ' + str(self.owner)
 
 class UserResult(models.Model):
     ''' main class of project '''
@@ -13,6 +23,17 @@ class UserResult(models.Model):
     result_letters = models.CharField(max_length=35, default='BBBBBEBBBBBEBBBBBEBBBBBEBBBBBEBBBBB')
     def __str__(self):
         return str(self.owner)
+
+class DateResult(models.Model):
+    ''' historical results '''
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    result_date = models.DateField()
+    result_time = models.TimeField()
+    result_letters = models.CharField(max_length=35, default='BBBBBEBBBBBEBBBBBEBBBBBEBBBBBEBBBBB')
+    #result_return = str(datetime.date.today()) + ' ' + str(owner)
+    #result_return = 'owner:' + ' ' + str(owner)
+    def __str__(self):
+        return str(self.result_date) + ' ' + str(self.owner)
 
 class WordleResult(models.Model):
     ''' old class for testing '''
@@ -27,7 +48,6 @@ class WordleResult(models.Model):
     table_height = 6
     table_try = [[0 for x in range(5)] for y in range(6)]
     table_try[3][3] = 1
-    #table_field_try = [[models.CharField(max_length=1, choices=ANSWERS, default='B') for x in range(2)] for y in range(3)]
     simple_field = models.CharField(max_length=1, choices=ANSWERS, default='B')
     simple_row = []
     for x in range(3):

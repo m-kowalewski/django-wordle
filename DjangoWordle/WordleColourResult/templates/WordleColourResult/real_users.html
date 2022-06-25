@@ -3,57 +3,57 @@
 {% load static %}
 <html>
 <head>
+    {% block title %} 
     <link rel="stylesheet" type="text/css" href="{% static 'WordleColourResult/style.css' %}">
-
-    {% block title %}
+    
     {% endblock %}
-    <img src="/static/WordleColourResult/images/sqgrey.gif">
 </head>
 
 <body>
     {% block content %}
-    <h1>Home page</h1>
+    <h1>Today's result</h1>
     
     {% if user.is_authenticated %}
-        USER AUTHENTICATED <br/>
+        USER AUTHENTICATED - you have access to site <br/><br/>
         Logged user: {{user.username}}<br/>
         <ul>
             <table>
                 <tr>
-                    {% for UserResult in UR %}
+                    {% for RealResult in TR %}
+                        {% ifchanged RealResult.result_date %}
+                            </tr>
+                            <tr>
+                        {% endifchanged %}
                         <td>
-                            <li>User name: {{ UserResult }}</li>
-                            <li>Date: {{ UserResult.date_update }}</li>
-                            <li>Time: {{ UserResult.time_update }}</li>
-                            {% for j in UserResult.result_letters %}
+                            <li>User name: <b>{{ RealResult.owner }}</b></li>
+                            <li>Date: {{ RealResult.result_date }}</li>
+                            <li>Time: {{ RealResult.result_time }}</li>
+                            {% for j in RealResult.result_letters %}
                                 {% if j == 'Y' %}
                                     <img src="/static/WordleColourResult/images/sqorange.gif">
                                 {% endif %}
-
                                 {% if j == 'G' %}
-                                    <a href=""><img src="/static/WordleColourResult/images/sqgreen.gif"></a>
+                                    <img src="/static/WordleColourResult/images/sqgreen.gif"></a>
                                 {% endif %}
-                                
                                 {% if j == 'B' %}
                                     <img src="/static/WordleColourResult/images/sqgrey.gif">
                                 {% endif %}
-
                                 {% if j == 'E' %}
                                     <br/>
                                 {% endif %}
                             {% endfor %}
                             <br/>
-                            {% if user == UserResult.owner or user.username == 'admin' %}
+                            {% if user == RealResult.owner or user.username == 'admin' %}
                                 <form method="post">
                                     {% csrf_token %}
                                     <fieldset>
                                         <label for="new_result_letters">Change result letters:</label>
                                         <br/>
-                                        <textarea name="new_result_letters" id="new_result_letters" cols="50" rows="1" >{{UserResult.result_letters}}</textarea>
+                                        <textarea name="new_result_letters" id="new_result_letters" cols="50" rows="1" >{{RealResult.result_letters}}</textarea>
                                             <br/>
                                     </fieldset>
                                     <!--<input type="submit" value="apply" name="{{ WordleResult.id }}"> -->
-                                    <button type="submit" name="button2" value="{{ UserResult.owner }}"> APPLY </button>
+                                    <button type="submit" name="button2" value="{{ RealResult.owner }}"> APPLY </button>
                                 </form>
                             {% endif %}
                         </td>
@@ -65,27 +65,22 @@
         USER NOT AUTHENTICATED
     {% endif %}
 
-    <h1>end page</h1>
-
-    <h1>HISTORY RESULT</h1>
+    <h1>HISTORICAL RESULTS</h1>
 
     {% if user.is_authenticated %}
-        USER AUTHENTICATED <br/>
-        Logged user: {{user.username}}<br/>
         <ul>
             <table>
                 <tr>
-                    {% for DateResult in DR %}
-                        {% ifchanged DateResult.result_date %}
+                    {% for RealResult in RR %}
+                        {% ifchanged RealResult.result_date %}
                             </tr>
                             <tr>
                         {% endifchanged %}
                         <td>
-                            <li>DateResult_name name: {{ DateResult }}</li>
-                            <li>Date: {{ DateResult.result_date }}</li>
-                            <li>Time: {{ DateResult.result_time }}</li>
-                            <!--Result Letters: {{ DateResult.result_letters }}--><br/>
-                            {% for j in DateResult.result_letters %}
+                            <li>User name: <b>{{ RealResult.owner }}</b></li>
+                            <li>Date: {{ RealResult.result_date }}</li>
+                            <li>Time: {{ RealResult.result_time }}</li>
+                            {% for j in RealResult.result_letters %}
                                 {% if j == 'Y' %}
                                     <img src="/static/WordleColourResult/images/sqorange.gif">
                                 {% endif %}
