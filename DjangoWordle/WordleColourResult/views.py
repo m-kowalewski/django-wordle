@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 from django.utils import timezone
 from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth.models import User
 from .models import DateResult, WordleResult, GraphicTable, UserResult, DateResult, RealUserResult
 import datetime, operator
 
@@ -25,8 +26,7 @@ def real_users(request):
         print('button_2: ', button_2)
         print('val: ', val)
         result = RealUserResult()
-        user_button = RealUserResult.objects.filter(pk=users_key[button_2])[0]
-        result.owner = user_button.owner
+        result.owner = User.objects.get(username=button_2)
         result.result_date = datetime.date.today()
         result.result_time = datetime.datetime.now()
         result.result_letters = str(val)
