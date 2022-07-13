@@ -1,42 +1,50 @@
+""" models file for WordleColourResult app """
+import datetime
 from tkinter import CASCADE
 from django.db import models
 from django.utils import timezone
 from django.contrib import admin
 from django.contrib.auth.models import User
-import datetime
+
 
 class RealUserResult(models.Model):
-    ''' Model for REAL USERS '''
+    """Model for REAL USERS """
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     result_date = models.DateField()
     result_time = models.TimeField()
     result_letters = models.CharField(max_length=35, default='BBBBBEBBBBBEBBBBBEBBBBBEBBBBBEBBBBB')
+
     def __str__(self):
         return str(self.result_date) + ' ' + str(self.owner)
 
+
 class UserResult(models.Model):
-    ''' main class of project '''
-    #owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    """ main class of project """
+    # owner = models.ForeignKey(User, on_delete=models.CASCADE)
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
     date_update = models.DateField(default=datetime.date.today)
-    time_update = models.TimeField(default=datetime.time(0,0,0))
+    time_update = models.TimeField(default=datetime.time(0, 0, 0))
     result_letters = models.CharField(max_length=35, default='BBBBBEBBBBBEBBBBBEBBBBBEBBBBBEBBBBB')
+
     def __str__(self):
         return str(self.owner)
 
+
 class DateResult(models.Model):
-    ''' historical results '''
+    """ historical results """
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     result_date = models.DateField()
     result_time = models.TimeField()
     result_letters = models.CharField(max_length=35, default='BBBBBEBBBBBEBBBBBEBBBBBEBBBBBEBBBBB')
-    #result_return = str(datetime.date.today()) + ' ' + str(owner)
-    #result_return = 'owner:' + ' ' + str(owner)
+    # result_return = str(datetime.date.today()) + ' ' + str(owner)
+    # result_return = 'owner:' + ' ' + str(owner)
+
     def __str__(self):
         return str(self.result_date) + ' ' + str(self.owner)
 
+
 class WordleResult(models.Model):
-    ''' old class for testing '''
+    """ old class for testing """
     user_name = models.CharField(max_length=100)
     result_date = models.DateTimeField('date solved')
     ANSWERS = (
@@ -58,10 +66,12 @@ class WordleResult(models.Model):
     letter_table = models.CharField(max_length=35, default='BBBBBEBBBBBEBBBBBEBBBBBEBBBBBEBBBBB')
     table_text = 'there will be a table'
     answer = models.CharField(max_length=1, choices=ANSWERS, default='B')
+
     def __str__(self):
         return self.user_name
 
+
 class GraphicTable(models.Model):
-    ''' class under work '''
+    """ class under work """
     wordleresult = models.ForeignKey(WordleResult, on_delete=models.CASCADE)
     table = 'there will be a table'
